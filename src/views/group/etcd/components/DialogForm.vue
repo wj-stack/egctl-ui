@@ -30,6 +30,9 @@ const ruleFormRef = ref<FormInstance>();
 const formVisible = ref(false);
 
 const formData = ref(props.data);
+
+const emit = defineEmits(["update:visible", "refresh"]);
+
 // Id          int64          `db:"id"`
 // Name        string         `db:"name"`
 // Address     string         `db:"address"`
@@ -50,6 +53,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         status: Number(formData.value.status)
       });
       console.log(v);
+      emit("refresh");
       message("提交成功", { type: "success" });
       formVisible.value = false;
       resetForm(formEl);
@@ -67,7 +71,6 @@ const closeDialog = () => {
   resetForm(ruleFormRef.value);
 };
 
-const emit = defineEmits(["update:visible"]);
 watch(
   () => formVisible.value,
   val => {

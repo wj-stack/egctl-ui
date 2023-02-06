@@ -1,15 +1,5 @@
 import { http } from "@/utils/http";
 
-type Result = {
-  success: boolean;
-  data?: {
-    /** 列表数据 */
-    list: Array<any>;
-  };
-};
-
-const prefix = "/api/group";
-
 export interface EtcdItem {
   name: string;
   address: string;
@@ -18,12 +8,24 @@ export interface EtcdItem {
   status: number;
 }
 
-export const getEtcdList = () => {
-  http.request<Result>("get", prefix + "/etcds").then(function (data: object) {
-    console.log(data);
-  });
+type Result = {
+  code: number;
+  data: {
+    etcd: Array<EtcdItem>;
+  };
 };
 
+const prefix = "/api/group";
+
+export const getEtcdList = () => {
+  return http.request<Result>("get", prefix + "/etcds");
+};
+
+// 新增/修改
 export const addEtcd = (data?: EtcdItem) => {
   return http.request<Result>("post", prefix + "/etcd", { data });
+};
+
+export const delEtcd = (data?: EtcdItem) => {
+  return http.request<Result>("delete", prefix + "/etcd", { data });
 };

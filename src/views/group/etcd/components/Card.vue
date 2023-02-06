@@ -49,16 +49,16 @@ const cardLogoClass = computed(() => [
         </div>
         <div class="list-card-item_detail--operation">
           <el-tag
-            :color="props.product.status === 0 ? '#00a870' : '#eee'"
+            :color="props.product.status === 1 ? '#00a870' : '#eee'"
             effect="dark"
             class="mx-1 list-card-item_detail--operation--tag"
           >
-            {{ props.product.status === 0 ? "已启用" : "已停用" }}
+            {{ props.product.status === 1 ? "已启用" : "已停用" }}
           </el-tag>
-          <el-dropdown trigger="click" :disabled="props.product.status === 0">
+          <el-dropdown trigger="click">
             <IconifyIconOffline :icon="More2Fill" class="text-[24px]" />
             <template #dropdown>
-              <el-dropdown-menu :disabled="props.product.status === 0">
+              <el-dropdown-menu>
                 <el-dropdown-item @click="handleClickManage(product)">
                   管理
                 </el-dropdown-item>

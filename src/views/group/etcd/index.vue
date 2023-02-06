@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Card from "./components/Card.vue";
-import { getEtcdList } from "@/api/etcd";
+import { getEtcdList, delEtcd, EtcdItem } from "@/api/etcd";
 import { message } from "@/utils/message";
 import { ElMessageBox } from "element-plus";
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, reactive } from "vue";
 import dialogForm from "./components/DialogForm.vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import Search from "@iconify-icons/ep/search";
@@ -39,12 +39,30 @@ const dataLoading = ref(true);
 
 const getEtcdListData = async () => {
   try {
-    const { data } = await getEtcdList();
-    productList.value = data.list;
-    pagination.value = {
-      ...pagination.value,
-      total: data.list.length
-    };
+    // const { data } = await getEtcdList();
+    const data = await getEtcdList();
+    if (data.code === 0) {
+      productList.value = data.data.etcd;
+      pagination.value = {
+        ...pagination.value,
+        total: data.data.etcd.length
+      };
+    }
+  } catch (e) {
+    console.log(e);
+  } finally {
+    setTimeout(() => {
+      dataLoading.value = false;
+    }, 500);
+  }
+};
+
+const delEtcdData = async (v?: EtcdItem) => {
+  try {
+    const data = await delEtcd(v);
+    if (data.code === 0) {
+      getEtcdListData();
+    }
   } catch (e) {
     console.log(e);
   } finally {
@@ -78,6 +96,15 @@ const handleDeleteItem = product => {
     }
   )
     .then(() => {
+      delEtcdData(
+        reactive<EtcdItem>({
+          name: product.name as string,
+          address: "",
+          description: "",
+          comment: "",
+          status: 0
+        })
+      );
       message("删除成功", { type: "success" });
     })
     .catch(() => {});
@@ -171,6 +198,10 @@ const handleManageProduct = product => {
         />
       </template>
     </div>
-    <dialogForm v-model:visible="formDialogVisible" :data="formData" />
+    <dialogForm
+      v-model:visible="formDialogVisible"
+      @refresh="getEtcdListData"
+      :data="formData"
+    />
   </div>
 </template>
