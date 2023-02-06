@@ -12,8 +12,16 @@ export default {
       component: () => import("@/views/group/etcd/index.vue"),
       meta: {
         icon: "card",
-        title: "Etcd",
-        showParent: true
+        title: "Etcd"
+      }
+    },
+    {
+      path: "/group/gateway",
+      name: "gateway",
+      component: () => import("@/views/group/gateway/index.vue"),
+      meta: {
+        icon: "card",
+        title: "网关"
       }
     }
   ]
