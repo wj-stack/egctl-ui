@@ -1,27 +1,27 @@
 export default {
   path: "/group",
-  redirect: "/group/etcd",
+  redirect: "/group/easegress",
   meta: {
     icon: "informationLine",
-    title: "集群管理"
+    title: "网关管理"
   },
   children: [
     {
-      path: "/group/etcd",
-      name: "etcd",
-      component: () => import("@/views/group/etcd/index.vue"),
+      path: "/group/easegress",
+      name: "easegress",
+      component: () => import("@/views/group/easegress/index.vue"),
       meta: {
         icon: "card",
-        title: "Etcd"
+        title: "Easegress"
       }
     },
     {
-      path: "/group/gateway",
-      name: "gateway",
-      component: () => import("@/views/group/gateway/index.vue"),
+      path: "/group/http-server",
+      name: "http-server",
+      component: () => import("@/views/group/http-server/index.vue"),
       meta: {
         icon: "card",
-        title: "网关"
+        title: "HTTP-Server"
       }
     }
   ]

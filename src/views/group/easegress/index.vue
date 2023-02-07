@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Card from "./components/Card.vue";
-import { getEtcdList, delEtcd, EtcdItem } from "@/api/etcd";
+import { getEtcdList, delEtcd, EtcdItem } from "@/api/easegress";
 import { message } from "@/utils/message";
 import { ElMessageBox } from "element-plus";
 import { ref, onMounted, nextTick, reactive } from "vue";
@@ -89,7 +89,7 @@ const onCurrentChange = (current: number) => {
 };
 const handleDeleteItem = product => {
   ElMessageBox.confirm(
-    product ? `确认删除后${product.name}的所有集群将被清空, 且无法恢复` : "",
+    product ? `确认删除后${product.name}网关将被清空, 且无法恢复` : "",
     "提示",
     {
       type: "warning"
@@ -124,12 +124,12 @@ const handleManageProduct = product => {
         :icon="useRenderIcon(AddFill)"
         @click="formDialogVisible = true"
       >
-        新建集群
+        新建网关
       </el-button>
       <el-input
         style="width: 300px"
         v-model="searchValue"
-        placeholder="请输入集群名称"
+        placeholder="请输入网关名称"
         clearable
       >
         <template #suffix>

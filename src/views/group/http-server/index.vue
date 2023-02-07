@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getGateWayList } from "@/api/gateway";
+import { getGateWayList } from "@/api/http-server";
 // import { message } from "@/utils/message";
 // import { ElMessageBox } from "element-plus";
 import { ref, onMounted, computed } from "vue";
@@ -9,7 +9,7 @@ import Search from "@iconify-icons/ep/search";
 import AddFill from "@iconify-icons/ri/add-circle-line";
 
 defineOptions({
-  name: "gateway"
+  name: "http-server"
 });
 
 const svg = `
@@ -88,7 +88,7 @@ const onCurrentChange = (current: number) => {
 
 // const handleDeleteItem = product => {
 //   ElMessageBox.confirm(
-//     product ? `确认删除网关 ${product.name}, 且无法恢复` : "",
+//     product ? `确认删除HTTP-Server ${product.name}, 且无法恢复` : "",
 //     "提示",
 //     {
 //       type: "warning"
@@ -134,12 +134,12 @@ const GetFilterGatewayCount = computed(() => {
         :icon="useRenderIcon(AddFill)"
         @click="formDialogVisible = true"
       >
-        新建网关
+        新建HTTP-Server
       </el-button>
       <el-input
         style="width: 300px"
         v-model="searchValue"
-        placeholder="请输入网关名称"
+        placeholder="请输入HTTP-Server名称"
         clearable
       >
         <template #suffix>
@@ -171,10 +171,18 @@ const GetFilterGatewayCount = computed(() => {
           "
           style="width: 100%"
         >
-          <el-table-column prop="name" label="网关" width="180" />
+          <el-table-column prop="name" label="HTTP-Server" width="180" />
           <el-table-column prop="port" label="端口" width="180" />
           <el-table-column prop="desc" label="描述" />
-          <el-table-column prop="tag" label="所属集群" />
+          <el-table-column prop="tag" label="所属网关" />
+          <el-table-column label="后端" />
+          <el-table-column fixed="right" label="Operations" width="120">
+            <template #default>
+              <!-- @click="handleClick -->
+              <el-button link type="primary" size="small">Detail</el-button>
+              <el-button link type="primary" size="small">Edit</el-button>
+            </template>
+          </el-table-column>
         </el-table>
 
         <el-pagination

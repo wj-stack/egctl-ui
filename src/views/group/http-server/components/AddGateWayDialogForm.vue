@@ -2,11 +2,11 @@
 import { ref, watch, onMounted } from "vue";
 import { message } from "@/utils/message";
 import { FormInstance } from "element-plus";
-import { addGateWay } from "@/api/gateway";
-import { getEtcdList, EtcdItem } from "@/api/etcd";
+import { addGateWay } from "@/api/http-server";
+import { getEtcdList, EtcdItem } from "@/api/easegress";
 
 // const SELECT_OPTIONS = [
-//   { label: "网关", value: 1 },
+//   { label: "HTTP-Server", value: 1 },
 //   { label: "人工智能", value: 2 },
 //   { label: "CVM", value: 3 },
 //   { label: "防火墙", value: 4 },
@@ -93,13 +93,13 @@ watch(
 );
 
 const rules = {
-  name: [{ required: true, message: "请输入网关名称", trigger: "blur" }],
-  port: [{ required: true, message: "请输入网关端口", trigger: "blur" }],
+  name: [{ required: true, message: "请输入HTTP-Server名称", trigger: "blur" }],
+  port: [{ required: true, message: "请输入HTTP-Server端口", trigger: "blur" }],
   tag: [{ required: true, message: "请输入所属集群", trigger: "blur" }],
   status: [
     {
       required: true,
-      message: "请选择网关状态",
+      message: "请选择HTTP-Server状态",
       trigger: "change"
     }
   ]
@@ -135,7 +135,7 @@ onMounted(() => {
 <template>
   <el-dialog
     v-model="formVisible"
-    title="新建网关"
+    title="新建HTTP-Server"
     :width="680"
     draggable
     :before-close="closeDialog"
@@ -145,33 +145,33 @@ onMounted(() => {
       ref="ruleFormRef"
       :model="formData"
       :rules="rules"
-      label-width="100px"
+      label-width="150px"
     >
-      <el-form-item label="网关名称" prop="name">
+      <el-form-item label="HTTP-Server名称" prop="name">
         <el-input
           v-model="formData.name"
           :style="{ width: '480px' }"
-          placeholder="请输入网关名称"
+          placeholder="请输入HTTP-Server名称"
         />
       </el-form-item>
-      <el-form-item label="网关端口" prop="port">
+      <el-form-item label="HTTP-Server端口" prop="port">
         <el-input
           v-model="formData.port"
           :style="{ width: '480px' }"
-          placeholder="请输入网关端口"
+          placeholder="请输入HTTP-Server端口"
         />
       </el-form-item>
-      <!-- <el-form-item label="网关状态" prop="status">
+      <!-- <el-form-item label="HTTP-Server状态" prop="status">
         <el-radio-group v-model="formData.status">
           <el-radio label="0">已停用</el-radio>
           <el-radio label="1">已启用</el-radio>
         </el-radio-group>
       </el-form-item> -->
-      <el-form-item label="网关描述" prop="desc">
+      <el-form-item label="HTTP-Server描述" prop="desc">
         <el-input
           v-model="formData.desc"
           :style="{ width: '480px' }"
-          placeholder="请输入网关描述"
+          placeholder="请输入HTTP-Server描述"
         />
       </el-form-item>
       <el-form-item label="集群" prop="tag">

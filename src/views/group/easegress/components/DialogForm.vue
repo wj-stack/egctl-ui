@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import { message } from "@/utils/message";
 import { FormInstance } from "element-plus";
-import { addEtcd } from "@/api/etcd";
+import { addEtcd } from "@/api/easegress";
 
 // const SELECT_OPTIONS = [
 //   { label: "网关", value: 1 },
@@ -93,12 +93,12 @@ watch(
 );
 
 const rules = {
-  name: [{ required: true, message: "请输入集群名称", trigger: "blur" }],
-  address: [{ required: true, message: "请输入集群地址", trigger: "blur" }],
+  name: [{ required: true, message: "请输入网关名称", trigger: "blur" }],
+  address: [{ required: true, message: "请输入网关地址", trigger: "blur" }],
   status: [
     {
       required: true,
-      message: "请选择集群状态",
+      message: "请选择网关状态",
       trigger: "change"
     }
   ]
@@ -108,7 +108,7 @@ const rules = {
 <template>
   <el-dialog
     v-model="formVisible"
-    title="新建集群"
+    title="新建网关"
     :width="680"
     draggable
     :before-close="closeDialog"
@@ -120,31 +120,31 @@ const rules = {
       :rules="rules"
       label-width="100px"
     >
-      <el-form-item label="集群名称" prop="name">
+      <el-form-item label="网关名称" prop="name">
         <el-input
           v-model="formData.name"
           :style="{ width: '480px' }"
-          placeholder="请输入集群名称"
+          placeholder="请输入网关名称"
         />
       </el-form-item>
-      <el-form-item label="集群地址" prop="address">
+      <el-form-item label="网关地址" prop="address">
         <el-input
           v-model="formData.address"
           :style="{ width: '480px' }"
-          placeholder="请输入集群地址"
+          placeholder="请输入网关地址"
         />
       </el-form-item>
-      <el-form-item label="集群状态" prop="status">
+      <el-form-item label="网关状态" prop="status">
         <el-radio-group v-model="formData.status">
           <el-radio label="0">已停用</el-radio>
           <el-radio label="1">已启用</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="集群描述" prop="description">
+      <el-form-item label="网关描述" prop="description">
         <el-input
           v-model="formData.description"
           :style="{ width: '480px' }"
-          placeholder="请输入集群描述"
+          placeholder="请输入网关描述"
         />
       </el-form-item>
       <el-form-item label="备注" prop="mark">
